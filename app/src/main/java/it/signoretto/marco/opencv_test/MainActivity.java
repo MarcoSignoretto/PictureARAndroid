@@ -47,6 +47,10 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
     static {
         System.loadLibrary("native-lib");
         System.loadLibrary("opencv_java3");
+        /*if(!OpenCVLoader.initDebug()) {
+
+        }*/
+
     }
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
@@ -222,6 +226,8 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
             Log.e(TAG, "Impossible load all required resources" , ioe);
         }
 
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, mLoaderCallback);
+
+
+        //OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, mLoaderCallback);
     }
 }
