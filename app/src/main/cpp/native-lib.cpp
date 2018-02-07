@@ -6,17 +6,6 @@
 
 extern "C"{
 
-
-JNIEXPORT jstring JNICALL Java_it_signoretto_marco_opencv_1test_MainActivity_stringFromJNI(
-        JNIEnv *env,
-        jobject /* this */) {
-    std::string hello = "Hello from C++";
-
-    cv::Mat hist_image = cv::Mat::zeros(256, 256, CV_8UC1);
-
-    return env->NewStringUTF(hello.c_str());
-}
-
 JNIEXPORT void JNICALL Java_it_signoretto_marco_opencv_1test_PictureAR_applyAR(
         JNIEnv *env,
         jobject, /* this */
