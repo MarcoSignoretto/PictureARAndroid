@@ -9,5 +9,5 @@
 .externalNativeBuild
 /.idea
 app/*/release
-openCVLibrary*/
+openCVLibrary*/build/
 signature/
