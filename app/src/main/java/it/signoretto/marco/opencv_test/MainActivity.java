@@ -1,27 +1,18 @@
 package it.signoretto.marco.opencv_test;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
-import android.net.Uri;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-import org.opencv.engine.OpenCVEngineInterface;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.IOException;
@@ -37,6 +28,9 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     private Mat img_0p;
     private Mat img_1p;
+    private Mat img_0p_rgba;
+    private Mat img_1p_rgba;
+
     private Mat img_0m;
     private Mat img_1m;
 
@@ -97,8 +91,15 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
         Log.i(TAG, "called onCreate");
 
+        List<Camera.Size> pSizes = params.getSupportedPreviewSizes();
+        for(Camera.Size s : pSizes){
+            Log.v(TAG, "p_s: "+s.width+" "+s.height);
+        }
+
+
 
         //Log.i(TAG, "Chosen resolution: "+mSize.width+" "+mSize.height);
+        params.setPreviewSize(640, 480);
         params.setPictureSize(640, 480);
         mCamera.setParameters(params);
 
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         mOpenCvCameraView.setCvCameraViewListener(this);
         mOpenCvCameraView.enableView();
         mOpenCvCameraView.enableFpsMeter();
+        mOpenCvCameraView.setMaxFrameSize(640, 480);
+
 
 
 
@@ -118,11 +121,19 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             img_0m = Utils.loadResource(MainActivity.this, R.drawable.img0m);
             img_1m = Utils.loadResource(MainActivity.this, R.drawable.img1m);
 
+            img_0p_rgba = new Mat(img_0p.rows(), img_0p.cols(), img_0p.type());
+            Imgproc.cvtColor(img_0p, img_0p_rgba,Imgproc.COLOR_BGR2RGBA);
+
+            img_1p_rgba = new Mat(img_1p.rows(), img_1p.cols(), img_1p.type());
+            Imgproc.cvtColor(img_1p, img_1p_rgba,Imgproc.COLOR_BGR2RGBA);
+
             img_0m_th = new Mat(img_0m.rows(), img_0m.cols(), CV_8UC1);
             Imgproc.cvtColor(img_0m,img_0m_th,Imgproc.COLOR_BGR2GRAY);
 
             img_1m_th = new Mat(img_1m.rows(), img_1m.cols(), CV_8UC1);
             Imgproc.cvtColor(img_1m,img_1m_th,Imgproc.COLOR_BGR2GRAY);
+
+
 
             //img_0m_th = new Mat(img_0m.rows(), img_0m.cols(), CV_8UC1);
 //        //mcv::image_otsu_thresholding(img_0m,img_0m_th);
@@ -168,6 +179,12 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
         Mat frame = inputFrame.rgba();
 
+        //Imgproc.cvtColor(frame,frame,Imgproc.COLOR_RGB2BGR);
+
+
+        //Log.v(TAG,"Frame width: "+frame.width());
+        //Log.v(TAG, "Frame height: "+frame.height());
+
 //        img_0m.copyTo(frame.submat(new Rect(0,0,img_0m.cols(), img_0m.rows())));
 //        img_1m.copyTo(frame.submat(new Rect(0,0,img_1m.cols(), img_1m.rows())));
 //        img_0p.copyTo(frame.submat(new Rect(0,0,img_0p.cols(), img_0p.rows())));
@@ -197,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 //
 //        //apply_AR(img_0p, img_1p, img_0m_th, img_1m_th, frame, debug_info);
 //
-        PictureAR.apply_AR(img_0p, img_1p, img_0m_th, img_1m_th, frame, false);
+        PictureAR.apply_AR(img_0p_rgba, img_1p_rgba, img_0m_th, img_1m_th, frame, false);
 //
 //
 //

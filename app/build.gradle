@@ -2,6 +2,25 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    signingConfigs {
+        release {
+            Properties localProps = new Properties()
+            File localPropsFile = file('../signature/keystore.properties')
+            if (localPropsFile.exists()) {
+                localProps.load(new FileInputStream(localPropsFile))
+            }
+            storeFile file('../signature/PictureAR.jks')
+            storePassword localProps['keystore.password']
+            keyAlias localProps['keystore.alias']
+            keyPassword localProps['keystore.alias.password']
+        }
+    }
+
     defaultConfig {
         applicationId "it.signoretto.marco.opencv_test"
         minSdkVersion 21
@@ -17,8 +36,16 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
         }
     }
     externalNativeBuild {
