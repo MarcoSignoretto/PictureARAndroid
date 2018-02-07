@@ -8,19 +8,19 @@ In particular Van marker will be substituted with Van Gohg's picture and Leo wit
 
 [Original C++ Source code](https://github.com/MarcoSignoretto/PictureAR)
 
-<img src="data/test1.jpg" width="49%"> <img src="img/test1AR.png" width="49%">
+<img src="data/test1.jpg" width="49%"> <img src="data/test1AR.png" width="49%">
 
 ### PlayStore application ###
 
-You can download the application directly from play store at the following link
+You can download the application directly from play store.
 
-[PictureAR](https://play.google.com/store/apps/details?id=it.signoretto.marco.picturear)
+[See PictureAR on PlayStore](https://play.google.com/store/apps/details?id=it.signoretto.marco.picturear)
 
 ### Try the application ###
 
 In order to try the application you can print markers on a paper sheet or use the following markers
 
-<img src="data/0M.png" width="49%"> <img src="img/1M.png" width="49%">
+<img src="data/0M.png" width="49%"> <img src="data/1M.png" width="49%">
 
 
 ## Android Studio OpenCV Setup ##
@@ -38,15 +38,13 @@ In order to try the application you can print markers on a paper sheet or use th
 ### Import jni OpenCV libraries ###
 
 1. Copy the content of ```opencv.3.X.X-android-sdk/OpenCV-android-sdk/sdk/native/libs``` into ```app/src/main/jniLibs```
-2. Add into the ```CMakeLists.txt``` the following lines
+2. Add into the ```CMakeLists.txt```, after the ```cmake_minimum_required....```, the following lines
 ```sh
 # OpenCV stuff
 include_directories(native/jni/include)
 add_library( lib_opencv SHARED IMPORTED )
 set_target_properties(lib_opencv PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
 ```
-
-after the ```cmake_minimum_required....```
 3. Add ```lib_opencv``` to the ```target_link_libraries``` (see application CMakeLists.txt to better understand)
 
 ### Project Author ###
