@@ -46,7 +46,7 @@ add_library( lib_opencv SHARED IMPORTED )
 set_target_properties(lib_opencv PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
 ```
 
-after the ```cmake_minimum_required....``
+after the ```cmake_minimum_required....```
 3. Add ```lib_opencv``` to the ```target_link_libraries``` (see application CMakeLists.txt to better understand)
 
 ### Project Author ###
