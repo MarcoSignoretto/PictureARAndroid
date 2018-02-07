@@ -25,7 +25,7 @@ android {
         applicationId "it.signoretto.marco.picturear"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 3001
+        versionCode 4001
         versionName "1.0.0"
 
         manifestPlaceholders = [
@@ -71,7 +71,7 @@ android {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi', 'armeabi-v7a', 'mips'
+            include 'arm64-v8a', 'x86', 'armeabi', 'armeabi-v7a', 'mips'
             //include 'arm64-v8a','armeabi','armeabi-v7a','mips','mips64','x86','x86_64'
             universalApk false
         }
