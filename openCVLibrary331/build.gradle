@@ -10,9 +10,11 @@ android {
     }
 
     buildTypes {
+        //FIXME release build not works
         release {
+            shrinkResources false
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 }
