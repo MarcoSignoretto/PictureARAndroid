@@ -1,6 +1,6 @@
 # Pictures AR for Android #
 
-This is a simple example of an Android application which uses the code that I realized for my project Compute Vision course project at Ca' Foscari university.
+This is a simple example of an Android application which uses the code that I realized for my Computer Vision course project at Ca' Foscari university.
 
 The application is a simple AR software that replaces two markers with the pictures related to them.
 
