@@ -1,4 +1,4 @@
-package it.signoretto.marco.opencv_test;
+package it.signoretto.marco.picturear;
 
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="it.signoretto.marco.opencv_test">
+    package="it.signoretto.marco.picturear">
 
     <uses-permission android:name="android.permission.CAMERA"/>
 
@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         >
         <activity
-            android:name=".MainActivity"
+            android:name="it.signoretto.marco.picturear.MainActivity"
             android:resizeableActivity="${resizeableActivity}"
             android:screenOrientation="${orientationConfig}"
             >

@@ -6,7 +6,7 @@
 
 extern "C"{
 
-JNIEXPORT void JNICALL Java_it_signoretto_marco_opencv_1test_PictureAR_applyAR(
+JNIEXPORT void JNICALL Java_it_signoretto_marco_picturear_PictureAR_applyAR(
         JNIEnv *env,
         jobject, /* this */
         jlong j_img_0p,

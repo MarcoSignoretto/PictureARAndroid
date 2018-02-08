@@ -1,4 +1,4 @@
-package it.signoretto.marco.opencv_test;
+package it.signoretto.marco.picturear;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
