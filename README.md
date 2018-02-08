@@ -22,6 +22,7 @@ In order to try the application you can print markers on a paper sheet or use th
 
 <img src="data/0M.png" width="49%"> <img src="data/1M.png" width="49%">
 
+Download the pdf sheets: [Leo Marker](https://github.com/MarcoSignoretto/PictureARAndroid/blob/master/data/0M.pdf), [Van Marker](https://github.com/MarcoSignoretto/PictureARAndroid/blob/master/data/1M.pdf)
 
 ## Android Studio OpenCV Setup ##
 
