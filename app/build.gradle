@@ -25,8 +25,8 @@ android {
         applicationId "it.signoretto.marco.picturear"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 4003
-        versionName "1.1.0"
+        versionCode 102000
+        versionName "1.2.0"
 
         manifestPlaceholders = [
                 orientationConfig : "landscape",
