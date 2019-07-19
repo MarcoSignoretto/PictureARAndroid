@@ -40,40 +40,34 @@ android {
                 cppFlags "-std=c++11 -frtti -fexceptions"
             }
         }
+
+        ndk {
+            abiFilters 'arm64-v8a', 'x86', 'armeabi-v7a', 'x86_64'
+        }
     }
     buildTypes {
-        debug{
+        debug {
             debuggable false
             minifyEnabled false
             shrinkResources false
 
             signingConfig signingConfigs.release
         }
-        // FIXME release build not works!!
-        release{
-            debuggable true
-            minifyEnabled false
-            shrinkResources false
-
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),
-                    'proguard-rules.pro'
-
-            signingConfig signingConfigs.release
-        }
+        // FIXME release build doesn't works!!
+//        release {
+//            debuggable true
+//            minifyEnabled false
+//            shrinkResources false
+//
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+//                    'proguard-rules.pro'
+//
+//            signingConfig signingConfigs.release
+//        }
     }
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
-        }
-    }
-
-    splits {
-        abi {
-            enable true
-            reset()
-            include 'arm64-v8a', 'x86', 'armeabi', 'armeabi-v7a', 'mips'
-            //include 'arm64-v8a','armeabi','armeabi-v7a','mips','mips64','x86','x86_64'
-            universalApk false
         }
     }
 }

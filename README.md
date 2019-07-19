@@ -26,6 +26,10 @@ Download the pdf sheets: [Leo Marker](https://github.com/MarcoSignoretto/Picture
 
 ## Android Studio OpenCV Setup ##
 
+### NDK
+
+To build the app you need to use the NDK version "r16b"
+
 ### Import Java module ###
 
 1. Download the desired version of the OpenCV Android SDK from [OpenCV GitHub page](https://github.com/opencv/opencv/releases)
