@@ -25,14 +25,14 @@ namespace mcv{
          * keeps the result of thresholding in memory ( this is a target of all class operations )
          * @param filename name of image that we want to analize
          */
-        boundary_extractor(const std::string& filename);
+        explicit boundary_extractor(const std::string& filename);
 
         /**
         * Constructor: as before but using a gray scale image instead of a filename
         * @param image_gray: GrayScale image if "compute_threshold" = true, thresholded image if compute threshold = false
         * @param compute_threshold: if true an otsu threshold will be compute into input image
         */
-        boundary_extractor(const cv::Mat image_gray, bool compute_threshold = true);
+        boundary_extractor(const cv::Mat& image_gray, bool compute_threshold = true);
 
         /**
          * Find all boundaries of the image

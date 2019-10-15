@@ -5,11 +5,12 @@
 #include "marker.h"
 #include "utils.h"
 #include "boundary_extractor.h"
+#include "Matcher.h"
 #include <assert.h>
+#include <opencv2/highgui.hpp>
+#include <opencv2/core/utility.hpp>
+#include <opencv2/calib3d.hpp>
 #include <opencv2/imgproc.hpp>
-#include <opencv/cv.hpp>
-
-
 
 int mcv::marker::detect_orientation(const cv::Mat& warped_image) {
 
@@ -135,7 +136,7 @@ float mcv::marker::compute_matching(const cv::Mat &marker_extracted, const cv::M
     return sum/max;
 }
 
-void mcv::marker::apply_AR(const cv::Mat& img_0p, const cv::Mat& img_1p, const cv::Mat& img_0m_th, const cv::Mat& img_1m_th, cv::Mat& camera_frame, bool debug_info) {
+void mcv::marker::apply_AR(const mcv::Matcher& matcher, cv::Mat& camera_frame, bool debug_info) {
     cv::Mat frame_debug;
     cv::Mat grayscale;
     cv::Mat frame_th;
@@ -144,7 +145,7 @@ void mcv::marker::apply_AR(const cv::Mat& img_0p, const cv::Mat& img_1p, const c
 
     ///=== STEP 1 ===
     // Convert original image into gray scale image
-    cv::cvtColor(camera_frame, grayscale, CV_RGB2GRAY);
+    cv::cvtColor(camera_frame, grayscale, cv::COLOR_RGB2GRAY);
 
     if(debug_info) {
         frame_debug = camera_frame.clone();
@@ -181,12 +182,10 @@ void mcv::marker::apply_AR(const cv::Mat& img_0p, const cv::Mat& img_1p, const c
 
     ///=== STEP 9 ===
     be.corners_to_matrix(corner_matrix);
-
-    // TODO try to fix this issue
-    /*const cv::TermCriteria criteria = cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 100, 0.001);
+    const cv::TermCriteria criteria = cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 100, 0.001);
     // cornerSubPix optimization is based on original thresholded image
     cv::cornerSubPix(frame_th,corner_matrix,cv::Size(5,5),cv::Size(-1,-1),criteria); // (-1,-1) means no zero zone
-    be.matrix_to_corners(corner_matrix);*/
+    be.matrix_to_corners(corner_matrix);
 
     //========== HOMOGRAPHY =============
     // All homography operation are applied into unblured image
@@ -218,41 +217,35 @@ void mcv::marker::apply_AR(const cv::Mat& img_0p, const cv::Mat& img_1p, const c
 
         ///=== STEP 13 ===
         // ============ MATCHING
-        float match_0m = mcv::marker::compute_matching(img_0m_th, warped_img);
-        float match_1m = mcv::marker::compute_matching(img_1m_th, warped_img);
 
-
-        // Project placeholder with higher probability in original image if it matches above certain threshold
-        ///=== STEP 14 ===
-        if (match_0m > MATCH_THRESHOLD || match_1m > MATCH_THRESHOLD) {
-
-            const cv::Mat &matched_image = (match_0m > match_1m) ? img_0p : img_1p;
+        const cv::Mat* matched_image = matcher.findBestMatch(warped_img, MATCH_THRESHOLD);
+        if(matched_image != nullptr){
 
             cv::Mat output_img;
 
             // Updated rotation matrix with picture rotation
             mcv::marker::calculate_picture_rotation(rotation_matrix, orientation);
-            cv::warpPerspective(matched_image, output_img, rotation_matrix, cv::Size(256, 256));
+            cv::warpPerspective(*matched_image, output_img, rotation_matrix, cv::Size(256, 256));
             cv::warpPerspective(output_img, camera_frame, H, cv::Size(camera_frame.cols, camera_frame.rows), cv::WARP_INVERSE_MAP, cv::BORDER_TRANSPARENT);
         }
 
-        if(debug_info){
-            cv::imshow("warped_marker", warped_img);
-            cout << "LEO: " << match_0m << ", VAN: " << match_1m << endl;
-        }
+//        if(debug_info){
+//            cv::imshow("warped_marker", warped_img);
+////            cout << "LEO: " << match_0m << ", VAN: " << match_1m << endl;
+//        }
 
     }
 
     // It shows debug images with features
-    if (debug_info) {
-        be.draw_boundaries(frame_debug);
-        be.draw_boundaries_corners(frame_debug);
-
-        cv::imshow("thresholded", frame_th);
-        cv::imshow("corners", img_corners);
-        cv::imshow("live", frame_debug);
-
-    }
+//    if (debug_info) {
+//        be.draw_boundaries(frame_debug);
+//        be.draw_boundaries_corners(frame_debug);
+//
+//        cv::imshow("thresholded", frame_th);
+//        cv::imshow("corners", img_corners);
+//        cv::imshow("live", frame_debug);
+//
+//    }
 }
 
 

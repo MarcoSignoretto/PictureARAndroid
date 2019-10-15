@@ -9,7 +9,7 @@
 cv::Mat mcv::normalize_hist(cv::Mat &hist, const cv::Mat &image){
     //we use float data into normalized histogram because as necessary precision and it uses less memory than double
     float pixels = image.rows*image.cols;
-    cv::Mat norm_hist = cv::Mat::zeros(1,hist.cols, CV_32FC1); // Create 0 matrix 1 channel and float data
+    cv::Mat norm_hist{cv::Mat::zeros(1,hist.cols, CV_32FC1)}; // Create 0 matrix 1 channel and float data
 
     //Skip continuous control because hist has only a single row that is surely continuous so I have used direct
     //pointer access to increase efficiency
@@ -23,7 +23,7 @@ cv::Mat mcv::normalize_hist(cv::Mat &hist, const cv::Mat &image){
 }
 
 cv::Mat mcv::generate_hist_image(const cv::Mat &hist, int max_value, string filename){
-    cv::Mat hist_image = cv::Mat::zeros(256, 256, CV_8UC1);  //  Init all black
+    cv::Mat hist_image{cv::Mat::zeros(256, 256, CV_8UC1)};  //  Init all black
     for(int i = 0; i < hist.cols; ++i){
         int height = (int)round((float)hist.at<int>(0,i) * (256.0f / (float)max_value)); // truncate to display
         // initially image is completely black, then using fact that (0,0) is at "top, left" I fill with white pixels
@@ -40,7 +40,7 @@ cv::Mat mcv::generate_hist_image(const cv::Mat &hist, int max_value, string file
 cv::Mat mcv::compute_hist(const cv::Mat& image_gray, int& max_value){
     max_value = 0;
     // use 32 bits to store image (worst case 307200 so 16-bit is not sufficient)
-    cv::Mat hist = cv::Mat::zeros(1, 256, CV_32SC1);
+    cv::Mat hist{cv::Mat::zeros(1, 256, CV_32SC1)};
 
     int nRows = image_gray.rows;
     int nCols = image_gray.cols;
@@ -263,7 +263,7 @@ void mcv::line(cv::Mat &dest,  double rho, double theta, double origin_x, double
     pt1.y = cvRound(y0 + 1000*(a));
     pt2.x = cvRound(x0 - 1000*(-b));
     pt2.y = cvRound(y0 - 1000*(a));
-    cv::line( dest, pt1, pt2, cv::Scalar(255,255,255), 1, CV_AA);
+    cv::line( dest, pt1, pt2, cv::Scalar(255,255,255), 1, cv::LINE_AA);
 }
 
 double mcv::m(double theta) {

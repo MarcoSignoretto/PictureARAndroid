@@ -6,6 +6,7 @@
 #define PROJECT_MARKER_H
 
 #include <opencv2/core/mat.hpp>
+#include "Matcher.h"
 
 namespace mcv{
     namespace marker{
@@ -128,7 +129,7 @@ namespace mcv{
          * @param camera_frame: original image on which AR will be applied
          * @param debug_info: if true additional images will be shown with debug pourpose
          */
-        void apply_AR(const cv::Mat& img_0p, const cv::Mat& img_1p, const cv::Mat& img_0m_th, const cv::Mat& img_1m_th, cv::Mat& camera_frame,  bool debug_info);
+        void apply_AR(const mcv::Matcher& matcher, cv::Mat& camera_frame,  bool debug_info);
 
     }
 }

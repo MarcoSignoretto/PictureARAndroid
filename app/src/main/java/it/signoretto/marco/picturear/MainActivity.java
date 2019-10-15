@@ -152,7 +152,7 @@ public class MainActivity extends CameraActivity implements CvCameraViewListener
     private static final String TAG = "OCVSample::Activity";
 
     static {
-//        System.loadLibrary("native-lib");
+        System.loadLibrary("native-lib");
         System.loadLibrary("opencv_java4");
         /*if(!OpenCVLoader.initDebug()) {
 
@@ -255,8 +255,9 @@ public class MainActivity extends CameraActivity implements CvCameraViewListener
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-        Log.d(TAG, "Camera frame");
-        return inputFrame.rgba();
+        Mat frame = inputFrame.rgba();
+        PictureAR.apply_AR(img_0p_rgba, img_1p_rgba, img_0m_th, img_1m_th, frame, false);
+        return frame;
     }
 
     @Override
