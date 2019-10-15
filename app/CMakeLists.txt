@@ -13,30 +13,39 @@ cmake_minimum_required(VERSION 3.4.1)
 SET(CMAKE_BUILD_TYPE Release)
 
 # OpenCV stuff
-include_directories(native/jni/include)  # This line is required If want OpenCv library available also in C++ libraries (as PictureAR)
-add_library( lib_opencv SHARED IMPORTED )
-set_target_properties(lib_opencv PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
+#include_directories(native/jni/include)  # This line is required If want OpenCv library available also in C++ libraries (as PictureAR)
+#add_library( lib_opencv SHARED IMPORTED )
+#set_target_properties(lib_opencv PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
+
+#find_package(OpenCV 4.1 REQUIRED java)
+message("Precessing Native CMake....")
+
+find_package(OpenCV 4.1 REQUIRED java)
+if (OpenCV_FOUND)
+    message("here")
+    message(STATUS "OpenCV Version ${OpenCV_VERSION} found.")
+endif ()
 
 add_library( # Sets the name of the library.
-             native-lib
+        native-lib
 
-             # Sets the library as a shared library.
-             SHARED
+        # Sets the library as a shared library.
+        SHARED
 
-             # Provides a relative path to your source file(s).
-             src/main/cpp/native-lib.cpp )
+        # Provides a relative path to your source file(s).
+        src/main/cpp/native-lib.cpp)
 
 add_library( # Sets the name of the library.
-              PictureAR
+        PictureAR
 
-              # Sets the library as a shared library.
-              SHARED
+        # Sets the library as a shared library.
+        SHARED
 
-              # Provides a relative path to your source file(s).
-              src/main/cpp/utils.cpp
-              src/main/cpp/boundary.cpp
-              src/main/cpp/boundary_extractor.cpp
-              src/main/cpp/marker.cpp )
+        # Provides a relative path to your source file(s).
+        src/main/cpp/utils.cpp
+        src/main/cpp/boundary.cpp
+        src/main/cpp/boundary_extractor.cpp
+        src/main/cpp/marker.cpp)
 
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -46,28 +55,29 @@ add_library( # Sets the name of the library.
 # completing its build.
 
 find_library( # Sets the name of the path variable.
-              log-lib
+        log-lib
 
-              # Specifies the name of the NDK library that
-              # you want CMake to locate.
-              log )
+        # Specifies the name of the NDK library that
+        # you want CMake to locate.
+        log)
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
 
-target_link_libraries( PictureAR
+target_link_libraries(PictureAR
 
-                       lib_opencv)
-
+        ${OpenCV_LIBRARIES})
 
 
 target_link_libraries( # Specifies the target library.
-                       native-lib
+        native-lib
 
-                       lib_opencv
-                       PictureAR
+        ${OpenCV_LIBRARIES}
+        PictureAR
 
-                       # Links the target library to the log library
-                       # included in the NDK.
-                       ${log-lib} )
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib})
+
+message("Processed Native CMake")
