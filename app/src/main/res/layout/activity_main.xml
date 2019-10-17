@@ -8,9 +8,8 @@
     <org.opencv.android.JavaCameraView
         android:id="@+id/HelloOpenCvView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <!--        opencv:show_fps="true"-->
-    <!--        opencv:camera_id="any"-->
+        android:layout_height="match_parent"
+        />
 
 
     <ImageView
