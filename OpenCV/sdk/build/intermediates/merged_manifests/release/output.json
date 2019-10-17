@@ -1,0 +1,1 @@
+[{"outputType":{"type":"MERGED_MANIFESTS"},"apkData":{"type":"MAIN","splits":[],"versionCode":4120,"versionName":"4.1.2","enabled":true,"outputFile":"opencv-release.aar","fullName":"release","baseName":"release"},"path":"../../library_manifest/release/AndroidManifest.xml","properties":{"packageId":"org.opencv","split":""}}]

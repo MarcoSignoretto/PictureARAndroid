@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 
-def opencvsdk='/Users/marco/Downloads/OpenCV-android-sdk/sdk'
+def opencvsdk='../OpenCV/sdk'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 29
 
     dexOptions {
         javaMaxHeapSize "4g"
@@ -26,7 +26,7 @@ android {
     defaultConfig {
         applicationId "it.signoretto.marco.picturear"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 29
         versionCode 102000
         versionName "1.2.0"
 
@@ -42,7 +42,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags "-std=c++11 -frtti -fexceptions"
-                arguments "-DOpenCV_DIR=" + opencvsdk + "/native/jni" // , "-DANDROID_ARM_NEON=TRUE"
+                arguments "-DOpenCV_DIR=" + opencvsdk + "/native/jni"  , "-DCMAKE_BUILD_TYPE=Release"
             }
         }
         ndk {
@@ -51,11 +51,11 @@ android {
     }
     buildTypes {
         debug {
-            debuggable true
+            debuggable false
             minifyEnabled false
             shrinkResources false
 
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
         // FIXME release build doesn't works!!
 //        release {
