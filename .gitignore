@@ -4,10 +4,11 @@
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
-/build
 /captures
 .externalNativeBuild
 /.idea
 app/*/release
 openCVLibrary*/build/
 signature/
+build/
+.cxx/
