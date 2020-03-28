@@ -3,4 +3,6 @@
     <string name="camera_permission_not_ready">Camera permission is not ready</string>
     <string name="camera_permission_title">Camera permission</string>
     <string name="camera_permission_message">This application needs the camera permission to apply AR</string>
+    <string name="ar_warning_title">Warning</string>
+    <string name="ar_warning_message">This app uses Augmented Reality, all children have to be under parental supervision while using this app. Be careful and check your surroundings while using this app.</string>
 </resources>

@@ -12,3 +12,4 @@ openCVLibrary*/build/
 signature/
 build/
 .cxx/
+OpenCV/**

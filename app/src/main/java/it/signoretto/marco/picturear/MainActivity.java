@@ -70,6 +70,18 @@ public class MainActivity extends CameraActivity implements CvCameraViewListener
         mOpenCvCameraView.setCvCameraViewListener(this);
         mOpenCvCameraView.enableFpsMeter();
         mOpenCvCameraView.setMaxFrameSize(640, 480);
+
+        //Create AR waring dialog
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+        dialogBuilder.setTitle(R.string.ar_warning_title);
+        dialogBuilder.setMessage(R.string.ar_warning_message);
+        dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialogBuilder.create().show();
     }
 
     @Override
