@@ -21,13 +21,6 @@ namespace mcv{
     public:
 
         /**
-         * Constructor: this constructor performs loading of an image with filename given as a parameter then it computes otsu thresholding and it
-         * keeps the result of thresholding in memory ( this is a target of all class operations )
-         * @param filename name of image that we want to analize
-         */
-        explicit boundary_extractor(const std::string& filename);
-
-        /**
         * Constructor: as before but using a gray scale image instead of a filename
         * @param image_gray: GrayScale image if "compute_threshold" = true, thresholded image if compute threshold = false
         * @param compute_threshold: if true an otsu threshold will be compute into input image
@@ -47,12 +40,6 @@ namespace mcv{
          * @param boundary_color: color of the boundary ( mcv::BLACK or mcv::WHITE )
          */
         inline boundary moore_algorithm(int x, int y, const uchar boundary_color);
-
-        /**
-         * Draw boundaries evaluated with find_boundaries and alive after keep_between
-         * @param dest filename of the destionation image
-         */
-        void draw_boundaries(const std::string& dest);
 
         /**
          * This function creates a new binary image where pixel is WHITE (255) if it is in a boundary BLACK (0) otherwise

@@ -22,21 +22,6 @@ cv::Mat mcv::normalize_hist(cv::Mat &hist, const cv::Mat &image){
     return norm_hist;
 }
 
-cv::Mat mcv::generate_hist_image(const cv::Mat &hist, int max_value, string filename){
-    cv::Mat hist_image{cv::Mat::zeros(256, 256, CV_8UC1)};  //  Init all black
-    for(int i = 0; i < hist.cols; ++i){
-        int height = (int)round((float)hist.at<int>(0,i) * (256.0f / (float)max_value)); // truncate to display
-        // initially image is completely black, then using fact that (0,0) is at "top, left" I fill with white pixels
-        // part of the image that is over the height of the histogram ( this procedure is repeated for each value of
-        // the intensity represented into histogram
-        for(int j = hist_image.rows-1-height; j >= 0; --j){
-            hist_image.at<uchar>(j,i) = 255;  //make white pixel over height value
-        }
-    }
-    cv::imwrite(filename, hist_image);
-    return hist_image;
-}
-
 cv::Mat mcv::compute_hist(const cv::Mat& image_gray, int& max_value){
     max_value = 0;
     // use 32 bits to store image (worst case 307200 so 16-bit is not sufficient)

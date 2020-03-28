@@ -12,37 +12,6 @@
 
 using namespace mcv;
 
-boundary_extractor::boundary_extractor(const std::string& filename):filename_(filename){
-    const cv::Mat image_gray{cv::imread(filename, cv::IMREAD_GRAYSCALE)};
-
-    //compute otsu thresholding
-    cv::Mat image;
-    mcv::image_otsu_thresholding(image_gray,image);
-
-    // Create image with 1 pixel of padding in order to avoid bounds checking on moore's algorithm
-    image_ = cv::Mat::zeros(image.rows+2, image.cols+2, CV_8UC1);
-
-    int nRows = image_.rows;
-    int nCols = image_.cols;
-
-    // Copy source image ( image ) into padded image ( image_ )
-    int i,j;
-    uchar* p;
-    const uchar* p2;
-    for( i = 1; i < nRows-1; ++i) {
-        // Iterate on image with pointer of row, this method is less efficient that all pointer iteration but it works
-        // also for non continuous images
-        p = image_.ptr<uchar>(i);
-        p2 = image.ptr<uchar>(i-1);
-        for ( j = 1; j < nCols-1; ++j) {
-            p[j] = p2[j-1];
-        }
-    }
-    // decomment if you want visualize threshold image generated
-    //cv::imwrite("bacteria_border.png",image_);
-}
-
-
 boundary_extractor::boundary_extractor(const cv::Mat& image_gray, bool compute_threshold):filename_(""){
 
     assert(image_.channels() == 1 && "Invalid channel number");
@@ -280,31 +249,6 @@ inline int boundary_extractor::find_clock_index(cv::Vec2i* c_ptr, cv::Vec2i* b_p
         }
     }
     return index;
-}
-
-void boundary_extractor::draw_boundaries(const std::string &dest) {
-    cv::Mat fin_img;
-    // read original image in grayscale
-    cv::Mat image = cv::imread(filename_, CV_LOAD_IMAGE_GRAYSCALE);
-
-    // create a channel vector to produce colored image from
-    vector<cv::Mat> channels;
-    // set each channel image value ( remain grayscale )
-    // channels as classical OpenCV order (bgr)
-    // channels[0] => blue
-    // channels[1] => green
-    // channels[2] => red
-    channels.push_back(image.clone());
-    channels.push_back(image.clone());
-    channels.push_back(image.clone());
-
-    for(boundary& b : boundaries_){
-        draw_boundary(image,b,channels); // it draws red line into image respect to boundary pixels
-    }
-
-    // it merges channels into color image fin_image
-    merge(channels, fin_img);
-    cv::imwrite(dest,fin_img);
 }
 
 void boundary_extractor::create_boundaries_image(cv::Mat& image) {

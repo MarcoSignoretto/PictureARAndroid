@@ -23,17 +23,6 @@ namespace mcv{
     cv::Mat normalize_hist(cv::Mat &hist, const cv::Mat &image);
 
     /**
-     * Function that given an histogram "hist", it plots an histogram figure on 256x256 image with name specified into filename
-     * In order to have a good representation height are proportional to max value into the histogram
-     * (max value into the histogram has all pixels black, other values have a proportional amount of pixels filled )
-     * @param hist: non normalized histogram
-     * @param max_value: max value reach on hist ( passed as param for performance reason )
-     * @param filename: name of the histogram image
-     * @return image of the histogram
-     */
-    cv::Mat generate_hist_image(const cv::Mat &hist, int max_value, string filename);
-
-    /**
      * Calculate histogram for a 8-bit gray scale image
      * @param imageGray: image into gray scale
      * @param max_value: additional return param passed not init, in the end of function it contains max frequency present
