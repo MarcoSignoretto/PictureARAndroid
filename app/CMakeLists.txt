@@ -4,6 +4,7 @@
 # Sets the minimum version of CMake required to build the native library.
 
 cmake_minimum_required(VERSION 3.4.1)
+project(PictureAR)
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -20,7 +21,7 @@ SET(CMAKE_BUILD_TYPE Release)
 #find_package(OpenCV 4.1 REQUIRED java)
 message("Precessing Native CMake....")
 
-find_package(OpenCV 4.1 REQUIRED java)
+find_package(OpenCV 4.9 REQUIRED java)
 if (OpenCV_FOUND)
     message("here")
     message(STATUS "OpenCV Version ${OpenCV_VERSION} found.")
